@@ -6,8 +6,8 @@ module Jawbone
 
     attr_accessor :token
 
-    API_VERSION = "1.0"
-    BASE_URL = "https://jawbone.com/nudge/api/v.1.0"
+    API_VERSION = "1.1"
+    BASE_URL = "https://jawbone.com/nudge/api/v.1.1"
 
     include HTTParty
 
@@ -57,10 +57,6 @@ module Jawbone
         get_helper("#{plural}/#{id}/image", {})
       end
 
-      define_method "#{base}_intensity" do |id|
-        get_helper("#{plural}/#{id}/snapshot", {})
-      end
-
       define_method "create_#{base}" do |params|
         post_plural = base == "mood" ? base : plural
         post_helper("users/@me/#{post_plural}", params)
@@ -73,6 +69,10 @@ module Jawbone
 
     define_method "mood" do |id|
       get_helper("mood/#{id}", {})
+    end
+
+    define_method "ticks" do |id|
+      get_helper("sleeps/#{id}/ticks")
     end
 
     private
